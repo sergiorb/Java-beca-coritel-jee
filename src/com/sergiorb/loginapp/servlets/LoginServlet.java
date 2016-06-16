@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sergiorb.loginapp.config.AppConfig;
 import com.sergiorb.loginapp.daos.ReadersDao;
 import com.sergiorb.loginapp.entities.Reader;
+import com.sergiorb.loginapp.utils.SessionUtils;
 
 /**
  * Servlet implementation class LoginServlet
@@ -17,7 +19,6 @@ import com.sergiorb.loginapp.entities.Reader;
 public class LoginServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
 	private ReadersDao readerDao;
 
 	/**
@@ -46,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		this.setReaderDao(new ReadersDao());		
+		this.setReaderDao(new ReadersDao());
 	}
 
 	/**
@@ -93,7 +94,18 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/Templates/login/login.jsp").forward(request, response);
+		// If request is logged..
+		if(SessionUtils.isLogged(request)) {
+			
+			// Redirects to dashboard.
+			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/"));
+			return;
+			
+		} else {
+
+			// Renders login page.
+			request.getRequestDispatcher(AppConfig.TEMPATE_PATH + "/login/login.jsp").forward(request, response);
+		}
 	}
 
 	/**
@@ -110,22 +122,27 @@ public class LoginServlet extends HttpServlet {
 		// If they are valid...
 		if (this.checkEmail(email) && this.checkPassword(password)) {
 
+			// Retrieves reader object
 			Reader reader = this.getReaderDao().getReaderByEmailAndPass(email, password);
 			
-			//System.out.println(reader.toString());
-			
-			if(reader != null && reader.getEmail() == email && reader.getPassword() == password) {
+			// If reader exist in database...
+			if(reader != null && reader.getEmail().equals(email) && reader.getPassword().equals(password)) {
 				
-				// TODO: login process
-				
-				response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/"));
+				// Logs in the request
+				if(SessionUtils.login(request, reader)) {
+					
+					// Redirects request to dashboard
+					response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/"));
+					return;
+				} else {
+					// TODO: add message. request.setAttribute("message", "Error!");
+				}
 			}
 		} 
 
-		// If validation fails, returns to login:
-		// Controls if the login was successful or not.
-		request.setAttribute("validLogin", false);
+		// Sets error on request
+		request.setAttribute("error", true);
 		// Responses error template.
-		request.getRequestDispatcher("/Templates/login/login.jsp").forward(request, response);
+		request.getRequestDispatcher(AppConfig.TEMPATE_PATH + "/login/login.jsp").forward(request, response);
 	}
 }

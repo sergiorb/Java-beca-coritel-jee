@@ -99,4 +99,14 @@ public class Reader implements Serializable {
 	public void setBooks(List<Book> books) {
 		this.books = books;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Reader [id=" + id + ", email=" + email + ", password=" + password + ", userName=" + userName
+				+ ", websiteUrl=" + websiteUrl + "]";
+	}
 }

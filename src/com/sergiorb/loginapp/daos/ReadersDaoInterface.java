@@ -1,6 +1,7 @@
 /**
  * @author Sergio Romero Barra
  *
+ * Defines reader dao interface.
  */
 
 package com.sergiorb.loginapp.daos;

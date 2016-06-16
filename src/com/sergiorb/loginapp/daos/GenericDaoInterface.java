@@ -1,15 +1,14 @@
 /**
+ * @file GenericDaoInterface.java
  * @author Sergio Romero Barra
  *
+ *	Defines a generic DAO interface.
  */
 
 package com.sergiorb.loginapp.daos;
 
-
 public interface GenericDaoInterface {
 
-		public static final String PERSISTENCE_UNIT = "Java_beca_coritel_loginapp";
-		
 		abstract void init();
 		abstract void destroy();
 }

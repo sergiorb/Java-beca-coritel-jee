@@ -1,6 +1,8 @@
 /**
+ * @file ReadersDao.java
  * @author Sergio Romero Barra
- *
+ * 
+ * Implements readers dao.
  */
 
 package com.sergiorb.loginapp.daos;
@@ -12,7 +14,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import com.sergiorb.loginapp.config.AppConfig;
 import com.sergiorb.loginapp.entities.Reader;
+
 
 public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 
@@ -21,7 +25,7 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 	private EntityManager entitymanager;
 
 	public ReadersDao() {
-		this.init();
+		this.init(); // Initiates JPA access
 	}
 
 	/**
@@ -61,7 +65,9 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 	 */
 	@Override
 	public void init() {
-		this.setEmfactory(Persistence.createEntityManagerFactory(ReadersDao.PERSISTENCE_UNIT));
+		
+		// Instantiates JPA access objects.
+		this.setEmfactory(Persistence.createEntityManagerFactory(AppConfig.PERSISTENCE_UNIT));
 		this.setEntitymanager(this.getEmfactory().createEntityManager());
 	}
 
@@ -72,10 +78,15 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 	 */
 	@Override
 	public void destroy() {
+		
+		// Close JPA access objects.
 		this.getEntitymanager().close();
 		this.getEmfactory().close();
 	}
-
+	
+	/**
+	 * Retrieves all readers in the database.
+	 */
 	@Override
 	public List<Reader> getAllreaders() {
 		
@@ -85,7 +96,7 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 			
 			readers = this.getEntitymanager()
 				.createNamedQuery("Reader.findAll", Reader.class)
-				.getResultList();
+				.getResultList(); // Calls the named query defined on Reader entity.
 			
 		} catch (Exception e) {
 			
@@ -95,6 +106,9 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 		return readers;
 	}
 
+	/**
+	 *  Retrieves a reader object searching by name
+	 */
 	@Override
 	public Reader getReaderByName(String name) {
 		
@@ -105,7 +119,7 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 			reader = this.getEntitymanager()
 				.createNamedQuery("Reader.getByName", Reader.class)
 				.setParameter("userName", name)
-				.getSingleResult();
+				.getSingleResult(); // Calls the named query defined on Reader entity.
 			
 		} catch (Exception e) {
 			
@@ -115,6 +129,9 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 		return reader;
 	}
 
+	/**
+	 *  Retrieves a reader object searching by email
+	 */
 	@Override
 	public Reader getReaderByEmail(String email) {
 		
@@ -135,6 +152,9 @@ public class ReadersDao implements GenericDaoInterface, ReadersDaoInterface {
 		return reader;
 	}
 
+	/**
+	 *  Retrieves a reader object searching by its email and its password
+	 */
 	@Override
 	public Reader getReaderByEmailAndPass(String email, String password) {
 		

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,7 +25,7 @@
 				<form role="form" action="${pageContext.request.contextPath}/login" method="post">
 
 					<c:choose>
-						<c:when test="${validLogin == 'false'}">
+						<c:when test="${error == 'true'}">
 							<div class="form-group has-error">
 						</c:when>
 						<c:otherwise>
@@ -33,11 +34,13 @@
 					</c:choose>
 
 						<label for="name">Email:</label> 
-						<input type="text" class="form-control" id="email" name="email">
+						<input type="email" class="form-control" id="email" name="email" 
+						pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
+						 placeholder="Email" required>
 					</div>
 
 					<c:choose>
-						<c:when test="${validLogin == 'false'}">
+						<c:when test="${error == 'true'}">
 							<div class="form-group has-error">
 						</c:when>
 						<c:otherwise>
@@ -45,7 +48,8 @@
 						</c:otherwise>
 					</c:choose>
 						<label for="password">Password:</label> 
-						<input type="password" class="form-control" id="password" name="password">
+						<input type="password" class="form-control" id="password" name="password" 
+						 placeholder="Password" required>
 					</div>
 					
 					<button type="submit" class="btn btn-success">Login</button>
@@ -54,7 +58,7 @@
 		</div>
 		
 		<c:choose>
-			<c:when test="${validLogin == 'false'}">
+			<c:when test="${error == 'true'}">
 				<br>
 				<div class="col-md-6 col-md-offset-3 text-center">
 					<div class="alert alert-warning">
