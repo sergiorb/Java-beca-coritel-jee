@@ -12,7 +12,7 @@
 <%@ include file="../partials/css_links.html"%>
 
 <style type="text/css">
-
+0
 .btn-loguot {
 	padding-top: 10px;
 	padding-bottom: 15px;
