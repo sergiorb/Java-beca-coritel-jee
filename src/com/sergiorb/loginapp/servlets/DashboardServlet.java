@@ -51,13 +51,12 @@ public class DashboardServlet extends HttpServlet {
 			request.setAttribute("reader", SessionUtils.getReader(request));
 			
 			// Renders dashboard to request.
-			request.getRequestDispatcher(AppConfig.TEMPATE_PATH + "dashboard/dashboard.jsp").forward(request, response);
+			request.getRequestDispatcher(AppConfig.TEMPATE_PATH + "/dashboard/dashboard.jsp").forward(request, response);
 			
 		} else {
 			
-			// Redirects to login.
-			response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/login"));
-			return;
+			// Renders public dashboard to request.
+			request.getRequestDispatcher(AppConfig.TEMPATE_PATH + "/dashboard/public_dashboard.jsp").forward(request, response);
 		}
 	}
 

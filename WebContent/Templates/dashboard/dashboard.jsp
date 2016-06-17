@@ -15,43 +15,29 @@
 .user {
 	margin-top: 2em;
 }
+.btn-loguot {
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
 </style>
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-10 text-center">
-				<h1>Dashboard Page</h1>
-			</div>
-			<div class="col-md-2">
-				<p>
-					<c:choose>
-						<c:when test="${logged == 'true'}">
-							<form action="${pageContext.request.contextPath}/logout"
-								method="post">
-								<button type="submit" class="btn btn-danger">Logout</button>
-							</form>
-						</c:when>
-					</c:choose>
-				</p>
-			</div>
-		</div>
+	
+		<%@ include file="../partials/navbar.jsp"%>
+
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<div class="user">
-
-					<p>
-						<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
-						${reader.userName}
-					</p>
-					<p>
-						<i class="fa fa-envelope-o fa-lg fa-fw" aria-hidden="true"></i>
-						${reader.email}
-					</p>
-					<p>
-						<i class="fa fa-globe fa-lg fa-fw" aria-hidden="true"></i> <a
+				<div class="panel panel-primary">
+					<div class="panel-heading"><strong><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i></strong> ${reader.userName}</div>
+					<div class="panel-body">
+						<p><i class="fa fa-envelope-o fa-lg fa-fw" aria-hidden="true"></i>
+							${reader.email}
+						</p>
+						<p><i class="fa fa-globe fa-lg fa-fw" aria-hidden="true"></i> <a
 							href="${reader.websiteUrl}">${reader.websiteUrl}</a>
-					</p>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -59,8 +45,8 @@
 			<div class="col-md-6 col-md-offset-3">
 				<c:forEach items="${reader.books}" var="book">
 
-					<div class="panel panel-primary">
-						<div class="panel-heading">${book.name}</div>
+					<div class="panel panel-info">
+						<div class="panel-heading"><strong>Book:</strong> ${book.name}</div>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-6">
@@ -98,5 +84,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<%@ include file="../partials/js_links.html"%>
+	
 </body>
 </html>

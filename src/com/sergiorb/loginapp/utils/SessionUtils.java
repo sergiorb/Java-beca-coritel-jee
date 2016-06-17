@@ -16,9 +16,6 @@ import com.sergiorb.loginapp.entities.Session;
 
 public class SessionUtils {
 
-	@SuppressWarnings("unused")
-	private SessionsDao sessionDao;
-
 	/**
 	 * @param request
 	 * @param reader

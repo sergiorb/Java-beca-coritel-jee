@@ -16,4 +16,5 @@ public interface ReadersDaoInterface {
 	abstract Reader getReaderByName(String name);
 	abstract Reader getReaderByEmail(String email);
 	abstract Reader getReaderByEmailAndPass(String email, String password);
+	abstract Reader create(String name, String email, String password);
 }

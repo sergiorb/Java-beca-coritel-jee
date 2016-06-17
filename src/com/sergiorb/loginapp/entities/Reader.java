@@ -28,7 +28,12 @@ public class Reader implements Serializable {
 
 	public Reader() {
 	}
-
+	
+	public Reader(String name, String email, String password) {
+		this.setUserName(name);
+		this.setEmail(email);
+		this.setPassword(password); // TODO: to hash
+	}
 
 	@Id
 	@Column(unique=true, nullable=false)

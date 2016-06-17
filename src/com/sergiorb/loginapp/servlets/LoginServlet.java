@@ -11,6 +11,7 @@ import com.sergiorb.loginapp.config.AppConfig;
 import com.sergiorb.loginapp.daos.ReadersDao;
 import com.sergiorb.loginapp.entities.Reader;
 import com.sergiorb.loginapp.utils.SessionUtils;
+import com.sergiorb.loginapp.utils.Validators;
 
 /**
  * Servlet implementation class LoginServlet
@@ -56,36 +57,6 @@ public class LoginServlet extends HttpServlet {
 	public void destroy() {
 		this.getReaderDao().destroy();
 	}
-	
-	/** @param email. 
-	 * Asserts given email string is 
-	 * a valid email. 
-	 */
-	private boolean checkEmail(String email) {
-
-		if (email != null) {
-			if (!email.equals("")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-	
-	/** @param password. 
-	 * Asserts given password string is 
-	 * a valid password. 
-	 */
-	private boolean checkPassword(String password) {
-
-		if (password != null) {
-			if (!password.equals("")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -120,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		// If they are valid...
-		if (this.checkEmail(email) && this.checkPassword(password)) {
+		if (Validators.checkEmail(email) && Validators.checkPassword(password)) {
 
 			// Retrieves reader object
 			Reader reader = this.getReaderDao().getReaderByEmailAndPass(email, password);

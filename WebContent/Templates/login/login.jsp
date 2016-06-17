@@ -12,12 +12,10 @@
 <%@ include file="../partials/css_links.html"%>
 </head>
 <body>
+
+	<%@ include file="../partials/navbar.jsp"%>
+	
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<h1>Login Page</h1>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
